@@ -26,8 +26,10 @@ jobs:
           python-version: '3.11'
 
       # 5. Step to install uv
-      - name: Install uv
-        run: astral-sh/setup-uv@v1
+      - name: Install the latest version of uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "latest"
 
       # 6. Step to install dependencies using uv
       - name: Install dependencies
