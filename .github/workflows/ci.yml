@@ -1,0 +1,38 @@
+# .github/workflows/ci.yml
+
+name: CI Pipeline
+
+# 1. Trigger the workflow on pushes to the main branch
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  # 2. Define a single job called "build-and-test"
+  build-and-test:
+    runs-on: ubuntu-latest # Use a standard Linux runner
+
+    steps:
+      # 3. Step to check out your repository's code
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      # 4. Step to set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # 5. Step to install uv
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      # 6. Step to install dependencies using uv
+      - name: Install dependencies
+        run: ~/.cargo/bin/uv pip install -e .[test]
+
+      # 7. Step to run the tests using pytest
+      - name: Run tests
+        run: pytest -v src/
