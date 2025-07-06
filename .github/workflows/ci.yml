@@ -27,11 +27,11 @@ jobs:
 
       # 5. Step to install uv
       - name: Install uv
-        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+        run: astral-sh/setup-uv@v1
 
       # 6. Step to install dependencies using uv
       - name: Install dependencies
-        run: ~/.cargo/bin/uv pip install -e .[test]
+        run: uv pip install -e .[test]
 
       # 7. Step to run the tests using pytest
       - name: Run tests
