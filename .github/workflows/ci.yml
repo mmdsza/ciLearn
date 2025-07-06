@@ -33,7 +33,7 @@ jobs:
 
       # 6. Step to install dependencies using uv
       - name: Install dependencies
-        run: uv pip install -e .[test]
+        run: uv venv && source .venv/bin/activate && pip install -e .[test]
 
       # 7. Step to run the tests using pytest
       - name: Run tests
