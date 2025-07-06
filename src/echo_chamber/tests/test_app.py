@@ -41,10 +41,10 @@ def test_echo_endpoint_broken_assertion(client):
     response = client.post('/echo', json=payload)
     assert response.status_code == 200
     # Intentionally broken assertion
-    assert response.json['echo'] == 'this message does not match'
+    assert response.json['echo'] == 'this test is designed to fail'
 
 def test_nonexistent_page(client):
     """Tries to access a page that doesn't exist. (This will fail)"""
     response = client.get('/nonexistent')
     # This will fail because the actual status code will be 404
-    assert response.status_code == 200
+    assert response.status_code == 404
