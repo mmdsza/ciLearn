@@ -1,5 +1,4 @@
 import pytest
-import json
 from echo_chamber.app import create_app
 
 @pytest.fixture
