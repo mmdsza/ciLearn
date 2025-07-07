@@ -30,6 +30,7 @@ jobs:
         uses: astral-sh/setup-uv@v6
         with:
           version: "latest"
+          cache-key: "uv-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pyproject.toml') }}"
 
       # 6. Step to install dependencies using uv
       - name: Install dependencies
@@ -38,3 +39,20 @@ jobs:
       # 7. Step to run the tests using pytest
       - name: Run tests
         run: pytest -v src/
+  
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version: "latest"	
+          cache-key: "uv-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('pyproject.toml') }}"
+      - name: Install dependencies
+        run: uv venv && source .venv/bin/activate && pip install -e .[test]
+      - name: Run ruff linter
+        run: ruff check .
+      - name: Run ruff formatter check
+        run: ruff format --check .
